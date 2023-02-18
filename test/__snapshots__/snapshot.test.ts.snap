@@ -1,0 +1,2165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapthot test 1`] = `
+Object {
+  "Outputs": Object {
+    "ExportsOutputFnGetAttCodeCommitRepository596379BCArnE945FC92": Object {
+      "Export": Object {
+        "Name": "myCdk-common-StatefulStack:ExportsOutputFnGetAttCodeCommitRepository596379BCArnE945FC92",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "CodeCommitRepository596379BC",
+          "Arn",
+        ],
+      },
+    },
+    "ExportsOutputFnGetAttCodeCommitRepository596379BCName7A3949F2": Object {
+      "Export": Object {
+        "Name": "myCdk-common-StatefulStack:ExportsOutputFnGetAttCodeCommitRepository596379BCName7A3949F2",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "CodeCommitRepository596379BC",
+          "Name",
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "CodeCommitRepository596379BC": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "RepositoryName": "myCdk-common-backend-repo",
+      },
+      "Type": "AWS::CodeCommit::Repository",
+      "UpdateReplacePolicy": "Retain",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`snapthot test 2`] = `
+Object {
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "EndpointEcrA2E4ADD1": Object {
+      "Properties": Object {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "SecurityGroupEndpoint352EE1A2",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": "com.amazonaws.dummy-region.ecr.api",
+        "SubnetIds": Array [
+          "subnet-dummy1",
+          "subnet-dummy2",
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "EndpointEcrDkr7CFB0F33": Object {
+      "Properties": Object {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "SecurityGroupEndpoint352EE1A2",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": "com.amazonaws.dummy-region.ecr.dkr",
+        "SubnetIds": Array [
+          "subnet-dummy1",
+          "subnet-dummy2",
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "EndpointS3DFE9CD3D": Object {
+      "Properties": Object {
+        "RouteTableIds": Array [
+          "rtb-dummy",
+        ],
+        "ServiceName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "com.amazonaws.",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ".s3",
+            ],
+          ],
+        },
+        "VpcEndpointType": "Gateway",
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "SecurityGroupEndpoint352EE1A2": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-common-NetworkStack/SecurityGroupEndpoint",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "1.2.3.4/5",
+            "Description": "from 1.2.3.4/5:443",
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+          Object {
+            "Description": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "from ",
+                  Object {
+                    "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupId": Object {
+              "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+            },
+            "ToPort": 443,
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`snapthot test 3`] = `
+Object {
+  "Outputs": Object {
+    "ExportsOutputFnGetAttEcrRepository4D7B3EE1Arn21868DE8": Object {
+      "Export": Object {
+        "Name": "myCdk-test-StatefulStack:ExportsOutputFnGetAttEcrRepository4D7B3EE1Arn21868DE8",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "EcrRepository4D7B3EE1",
+          "Arn",
+        ],
+      },
+    },
+    "ExportsOutputRefEcrRepository4D7B3EE140E01346": Object {
+      "Export": Object {
+        "Name": "myCdk-test-StatefulStack:ExportsOutputRefEcrRepository4D7B3EE140E01346",
+      },
+      "Value": Object {
+        "Ref": "EcrRepository4D7B3EE1",
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "DbCluster224236EF": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "CopyTagsToSnapshot": true,
+        "DBClusterParameterGroupName": "default.aurora-postgresql14",
+        "DBSubnetGroupName": Object {
+          "Ref": "SubnetGroup",
+        },
+        "DeletionProtection": true,
+        "EnableCloudwatchLogsExports": Array [
+          "postgresql",
+        ],
+        "Engine": "aurora-postgresql",
+        "EngineVersion": "14.3",
+        "MasterUserPassword": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "DbClusterSecret9A4B0D5E",
+              },
+              ":SecretString:password::}}",
+            ],
+          ],
+        },
+        "MasterUsername": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "DbClusterSecret9A4B0D5E",
+              },
+              ":SecretString:username::}}",
+            ],
+          ],
+        },
+        "Port": 5432,
+        "StorageEncrypted": true,
+        "VpcSecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "SecurityGroupDb51B03785",
+              "GroupId",
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBCluster",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "DbClusterInstance155835CE5": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "DBClusterIdentifier": Object {
+          "Ref": "DbCluster224236EF",
+        },
+        "DBInstanceClass": "db.t3.medium",
+        "DBSubnetGroupName": Object {
+          "Ref": "SubnetGroup",
+        },
+        "Engine": "aurora-postgresql",
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "DbClusterLogRetentionpostgresqlED4C0F8E": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/rds/cluster/",
+              Object {
+                "Ref": "DbCluster224236EF",
+              },
+              "/postgresql",
+            ],
+          ],
+        },
+        "RetentionInDays": 7,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "DbClusterSecret9A4B0D5E": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "Description": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "Generated by the CDK for stack: ",
+              Object {
+                "Ref": "AWS::StackName",
+              },
+            ],
+          ],
+        },
+        "GenerateSecretString": Object {
+          "ExcludeCharacters": " %+~\`#$&*()|[]{}:;<>?!'/@\\"\\\\",
+          "GenerateStringKey": "password",
+          "PasswordLength": 30,
+          "SecretStringTemplate": "{\\"username\\":\\"postgres\\"}",
+        },
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DbClusterSecretAttachment4201A1ED": Object {
+      "Properties": Object {
+        "SecretId": Object {
+          "Ref": "DbClusterSecret9A4B0D5E",
+        },
+        "TargetId": Object {
+          "Ref": "DbCluster224236EF",
+        },
+        "TargetType": "AWS::RDS::DBCluster",
+      },
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+    },
+    "EcrRepository4D7B3EE1": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "EncryptionConfiguration": Object {
+          "EncryptionType": "KMS",
+        },
+        "LifecyclePolicy": Object {
+          "LifecyclePolicyText": "{\\"rules\\":[{\\"rulePriority\\":1,\\"selection\\":{\\"tagStatus\\":\\"any\\",\\"countType\\":\\"imageCountMoreThan\\",\\"countNumber\\":2},\\"action\\":{\\"type\\":\\"expire\\"}}]}",
+        },
+        "RepositoryName": "mycdk-test-backend-repo",
+      },
+      "Type": "AWS::ECR::Repository",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "FunctionStopDb5A6E63D9": Object {
+      "DependsOn": Array [
+        "FunctionStopDbServiceRoleDefaultPolicyF1D4D1F5",
+        "FunctionStopDbServiceRoleC67030FE",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-hnb659fds-assets-dummy-account-dummy-region",
+          "S3Key": "7ea3f731954e32da2b45b6b93d7d2e9e57a5a6cefeca4f943ca6aedff4522857.zip",
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "DB_CLUSTER_IDENTIFIER": Object {
+              "Ref": "DbCluster224236EF",
+            },
+          },
+        },
+        "Handler": "app.lambda_handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "FunctionStopDbServiceRoleC67030FE",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "FunctionStopDbLogRetention6E05C06A": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "FunctionStopDb5A6E63D9",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 7,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "FunctionStopDbServiceRoleC67030FE": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "FunctionStopDbServiceRoleDefaultPolicyF1D4D1F5": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "rds:StopDBCluster",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "FunctionStopDbServiceRoleDefaultPolicyF1D4D1F5",
+        "Roles": Array [
+          Object {
+            "Ref": "FunctionStopDbServiceRoleC67030FE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
+      "DependsOn": Array [
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": "cdk-hnb659fds-assets-dummy-account-dummy-region",
+          "S3Key": "e45ee2082d227db1b6f0292696ce5ce2b061c105d15efb341925ca040d1feb68.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutRetentionPolicy",
+                "logs:DeleteRetentionPolicy",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "Roles": Array [
+          Object {
+            "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "RuleForFunctionStopDb573F5190": Object {
+      "Properties": Object {
+        "ScheduleExpression": "cron(0 16 * * ? *)",
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "FunctionStopDb5A6E63D9",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "RuleForFunctionStopDbAllowEventRulemyCdktestStatefulStackFunctionStopDb334C9B01AE0ABB1E": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "FunctionStopDb5A6E63D9",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "RuleForFunctionStopDb573F5190",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "SecurityGroupDb51B03785": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-test-StatefulStack/SecurityGroupDb",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "SubnetGroup": Object {
+      "Properties": Object {
+        "DBSubnetGroupDescription": "db subnet group",
+        "SubnetIds": Array [
+          "subnet-dummy1",
+          "subnet-dummy2",
+        ],
+      },
+      "Type": "AWS::RDS::DBSubnetGroup",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`snapthot test 4`] = `
+Object {
+  "Outputs": Object {
+    "ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15": Object {
+      "Export": Object {
+        "Name": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "SecurityGroupWeb1BF47CDB",
+          "GroupId",
+        ],
+      },
+    },
+    "ExportsOutputFnGetAttServiceD69D759BName51127533": Object {
+      "Export": Object {
+        "Name": "myCdk-test-EcsStack:ExportsOutputFnGetAttServiceD69D759BName51127533",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "ServiceD69D759B",
+          "Name",
+        ],
+      },
+    },
+    "ExportsOutputRefClusterEB0386A796A0E3FE": Object {
+      "Export": Object {
+        "Name": "myCdk-test-EcsStack:ExportsOutputRefClusterEB0386A796A0E3FE",
+      },
+      "Value": Object {
+        "Ref": "ClusterEB0386A7",
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "Alb16C2F182": Object {
+      "Properties": Object {
+        "LoadBalancerAttributes": Array [
+          Object {
+            "Key": "deletion_protection.enabled",
+            "Value": "false",
+          },
+        ],
+        "Name": "myCdk-test-alb",
+        "Scheme": "internet-facing",
+        "SecurityGroups": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "SecurityGroupAlbD38A08FF",
+              "GroupId",
+            ],
+          },
+        ],
+        "Subnets": Array [
+          "s-12345",
+          "s-67890",
+        ],
+        "Type": "application",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+    },
+    "AlbListener86261768": Object {
+      "Properties": Object {
+        "DefaultActions": Array [
+          Object {
+            "TargetGroupArn": Object {
+              "Ref": "AlbListenerECSGroup39470D71",
+            },
+            "Type": "forward",
+          },
+        ],
+        "LoadBalancerArn": Object {
+          "Ref": "Alb16C2F182",
+        },
+        "Port": 80,
+        "Protocol": "HTTP",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+    },
+    "AlbListenerECSGroup39470D71": Object {
+      "Properties": Object {
+        "Port": 80,
+        "Protocol": "HTTP",
+        "TargetGroupAttributes": Array [
+          Object {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
+        "TargetType": "ip",
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+    },
+    "ClusterEB0386A7": Object {
+      "Properties": Object {
+        "ClusterName": "myCdk-test-cluster",
+      },
+      "Type": "AWS::ECS::Cluster",
+    },
+    "SecurityGroupAlbD38A08FF": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-test-EcsStack/SecurityGroupAlb",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "from 0.0.0.0/0:80",
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "ToPort": 80,
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "SecurityGroupWeb1BF47CDB": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-test-EcsStack/SecurityGroupWeb",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "SecurityGroupWebfrommyCdktestEcsStackSecurityGroupAlb77931EAA300004DCAE62": Object {
+      "Properties": Object {
+        "Description": "Load balancer to target",
+        "FromPort": 3000,
+        "GroupId": Object {
+          "Fn::GetAtt": Array [
+            "SecurityGroupWeb1BF47CDB",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": Object {
+          "Fn::GetAtt": Array [
+            "SecurityGroupAlbD38A08FF",
+            "GroupId",
+          ],
+        },
+        "ToPort": 3000,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "ServiceD69D759B": Object {
+      "DependsOn": Array [
+        "AlbListenerECSGroup39470D71",
+        "AlbListener86261768",
+      ],
+      "Properties": Object {
+        "Cluster": Object {
+          "Ref": "ClusterEB0386A7",
+        },
+        "DeploymentConfiguration": Object {
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50,
+        },
+        "EnableECSManagedTags": false,
+        "HealthCheckGracePeriodSeconds": 60,
+        "LaunchType": "FARGATE",
+        "LoadBalancers": Array [
+          Object {
+            "ContainerName": "web",
+            "ContainerPort": 3000,
+            "TargetGroupArn": Object {
+              "Ref": "AlbListenerECSGroup39470D71",
+            },
+          },
+        ],
+        "NetworkConfiguration": Object {
+          "AwsvpcConfiguration": Object {
+            "AssignPublicIp": "DISABLED",
+            "SecurityGroups": Array [
+              Object {
+                "Fn::GetAtt": Array [
+                  "SecurityGroupWeb1BF47CDB",
+                  "GroupId",
+                ],
+              },
+            ],
+            "Subnets": Array [
+              "subnet-dummy1",
+              "subnet-dummy2",
+            ],
+          },
+        },
+        "ServiceName": "myCdk-test-service",
+        "TaskDefinition": Object {
+          "Ref": "TaskDefinitionB36D86D9",
+        },
+      },
+      "Type": "AWS::ECS::Service",
+    },
+    "ServiceTaskCountTarget23E25614": Object {
+      "Properties": Object {
+        "MaxCapacity": 1,
+        "MinCapacity": 1,
+        "ResourceId": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "service/",
+              Object {
+                "Ref": "ClusterEB0386A7",
+              },
+              "/",
+              Object {
+                "Fn::GetAtt": Array [
+                  "ServiceD69D759B",
+                  "Name",
+                ],
+              },
+            ],
+          ],
+        },
+        "RoleARN": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":iam::dummy-account:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
+            ],
+          ],
+        },
+        "ScalableDimension": "ecs:service:DesiredCount",
+        "ServiceNamespace": "ecs",
+      },
+      "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+    },
+    "ServiceTaskCountTargetCpuScalingCC8A5DF6": Object {
+      "Properties": Object {
+        "PolicyName": "myCdktestEcsStackServiceTaskCountTargetCpuScaling05903B44",
+        "PolicyType": "TargetTrackingScaling",
+        "ScalingTargetId": Object {
+          "Ref": "ServiceTaskCountTarget23E25614",
+        },
+        "TargetTrackingScalingPolicyConfiguration": Object {
+          "PredefinedMetricSpecification": Object {
+            "PredefinedMetricType": "ECSServiceAverageCPUUtilization",
+          },
+          "TargetValue": 60,
+        },
+      },
+      "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+    },
+    "TaskDefinitionB36D86D9": Object {
+      "Properties": Object {
+        "ContainerDefinitions": Array [
+          Object {
+            "Essential": true,
+            "Image": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  Object {
+                    "Fn::Select": Array [
+                      4,
+                      Object {
+                        "Fn::Split": Array [
+                          ":",
+                          Object {
+                            "Fn::ImportValue": "myCdk-test-StatefulStack:ExportsOutputFnGetAttEcrRepository4D7B3EE1Arn21868DE8",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  ".dkr.ecr.",
+                  Object {
+                    "Fn::Select": Array [
+                      3,
+                      Object {
+                        "Fn::Split": Array [
+                          ":",
+                          Object {
+                            "Fn::ImportValue": "myCdk-test-StatefulStack:ExportsOutputFnGetAttEcrRepository4D7B3EE1Arn21868DE8",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  ".",
+                  Object {
+                    "Ref": "AWS::URLSuffix",
+                  },
+                  "/",
+                  Object {
+                    "Fn::ImportValue": "myCdk-test-StatefulStack:ExportsOutputRefEcrRepository4D7B3EE140E01346",
+                  },
+                  ":latest",
+                ],
+              ],
+            },
+            "Memory": 1024,
+            "Name": "web",
+            "PortMappings": Array [
+              Object {
+                "ContainerPort": 3000,
+                "HostPort": 3000,
+                "Protocol": "tcp",
+              },
+            ],
+          },
+        ],
+        "Cpu": "512",
+        "ExecutionRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "TaskDefinitionExecutionRole8D61C2FB",
+            "Arn",
+          ],
+        },
+        "Family": "myCdktestEcsStackTaskDefinition5EDC249A",
+        "Memory": "1024",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": Array [
+          "FARGATE",
+        ],
+        "TaskRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "TaskDefinitionTaskRoleFD40A61D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "TaskDefinitionExecutionRole8D61C2FB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "TaskDefinitionExecutionRoleDefaultPolicy1F3406F5": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::ImportValue": "myCdk-test-StatefulStack:ExportsOutputFnGetAttEcrRepository4D7B3EE1Arn21868DE8",
+              },
+            },
+            Object {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "TaskDefinitionExecutionRoleDefaultPolicy1F3406F5",
+        "Roles": Array [
+          Object {
+            "Ref": "TaskDefinitionExecutionRole8D61C2FB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "TaskDefinitionTaskRoleFD40A61D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`snapthot test 5`] = `
+Object {
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "BuildProject097C5DB7": Object {
+      "Properties": Object {
+        "Artifacts": Object {
+          "Type": "CODEPIPELINE",
+        },
+        "Cache": Object {
+          "Type": "NO_CACHE",
+        },
+        "EncryptionKey": Object {
+          "Fn::GetAtt": Array [
+            "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+            "Arn",
+          ],
+        },
+        "Environment": Object {
+          "ComputeType": "BUILD_GENERAL1_SMALL",
+          "Image": "aws/codebuild/standard:4.0",
+          "ImagePullCredentialsType": "CODEBUILD",
+          "PrivilegedMode": true,
+          "Type": "LINUX_CONTAINER",
+        },
+        "LogsConfig": Object {
+          "CloudWatchLogs": Object {
+            "GroupName": Object {
+              "Ref": "LogGroupmyCdktestbuildF5219B72",
+            },
+            "Status": "ENABLED",
+          },
+        },
+        "ServiceRole": Object {
+          "Fn::GetAtt": Array [
+            "BuildProjectRoleAA92C755",
+            "Arn",
+          ],
+        },
+        "Source": Object {
+          "Type": "CODEPIPELINE",
+        },
+      },
+      "Type": "AWS::CodeBuild::Project",
+    },
+    "BuildProjectRoleAA92C755": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "codebuild.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "BuildProjectRoleDefaultPolicy3E9F248C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "LogGroupmyCdktestbuildF5219B72",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":logs:dummy-region:dummy-account:log-group:/aws/codebuild/",
+                      Object {
+                        "Ref": "BuildProject097C5DB7",
+                      },
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":logs:dummy-region:dummy-account:log-group:/aws/codebuild/",
+                      Object {
+                        "Ref": "BuildProject097C5DB7",
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "codebuild:CreateReportGroup",
+                "codebuild:CreateReport",
+                "codebuild:UpdateReport",
+                "codebuild:BatchPutTestCases",
+                "codebuild:BatchPutCodeCoverages",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":codebuild:dummy-region:dummy-account:report-group/",
+                    Object {
+                      "Ref": "BuildProject097C5DB7",
+                    },
+                    "-*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:CompleteLayerUpload",
+                "ecr:GetAuthorizationToken",
+                "ecr:InitiateLayerUpload",
+                "ecr:PutImage",
+                "ecr:UploadLayerPart",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketC0F7F396",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "myCdktestPipelineArtifactsBucketC0F7F396",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "BuildProjectRoleDefaultPolicy3E9F248C",
+        "Roles": Array [
+          Object {
+            "Ref": "BuildProjectRoleAA92C755",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "LogGroupmyCdktestbuildF5219B72": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "LogGroupName": "/aws/codebuild/myCdk-test-build",
+        "RetentionInDays": 7,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "myCdktestPipelineArtifactsBucketC0F7F396": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "KMSMasterKeyID": Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                    "Arn",
+                  ],
+                },
+                "SSEAlgorithm": "aws:kms",
+              },
+            },
+          ],
+        },
+        "PublicAccessBlockConfiguration": Object {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "myCdktestPipelineArtifactsBucketEncryptionKeyAlias5B7EBFEF": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AliasName": "alias/codepipeline-mycdktestcicdstackmycdktestpipeline4bb04618",
+        "TargetKeyId": Object {
+          "Fn::GetAtt": Array [
+            "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::KMS::Alias",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "KeyPolicy": Object {
+          "Statement": Array [
+            Object {
+              "Action": "kms:*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::dummy-account:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::KMS::Key",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "myCdktestPipelineArtifactsBucketPolicyAD6B901F": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "myCdktestPipelineArtifactsBucketC0F7F396",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:*",
+              "Condition": Object {
+                "Bool": Object {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": Object {
+                "AWS": "*",
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketC0F7F396",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "myCdktestPipelineArtifactsBucketC0F7F396",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "myCdktestPipelineBuildCodeBuildCodePipelineActionRole3421E70C": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::dummy-account:root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "myCdktestPipelineBuildCodeBuildCodePipelineActionRoleDefaultPolicy5CEA7F49": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "BuildProject097C5DB7",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "myCdktestPipelineBuildCodeBuildCodePipelineActionRoleDefaultPolicy5CEA7F49",
+        "Roles": Array [
+          Object {
+            "Ref": "myCdktestPipelineBuildCodeBuildCodePipelineActionRole3421E70C",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "myCdktestPipelineC9E9A08B": Object {
+      "DependsOn": Array [
+        "myCdktestPipelineRoleDefaultPolicy79743052",
+        "myCdktestPipelineRoleF893E8BB",
+      ],
+      "Properties": Object {
+        "ArtifactStore": Object {
+          "EncryptionKey": Object {
+            "Id": Object {
+              "Fn::GetAtt": Array [
+                "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                "Arn",
+              ],
+            },
+            "Type": "KMS",
+          },
+          "Location": Object {
+            "Ref": "myCdktestPipelineArtifactsBucketC0F7F396",
+          },
+          "Type": "S3",
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "myCdktestPipelineRoleF893E8BB",
+            "Arn",
+          ],
+        },
+        "Stages": Array [
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Source",
+                  "Owner": "AWS",
+                  "Provider": "CodeCommit",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "BranchName": "master",
+                  "PollForSourceChanges": false,
+                  "RepositoryName": Object {
+                    "Fn::ImportValue": "myCdk-common-StatefulStack:ExportsOutputFnGetAttCodeCommitRepository596379BCName7A3949F2",
+                  },
+                },
+                "Name": "CodeCommit",
+                "OutputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Source_CodeCommit",
+                  },
+                ],
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleC6C23813",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "Source",
+          },
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Build",
+                  "Owner": "AWS",
+                  "Provider": "CodeBuild",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "EnvironmentVariables": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "[{\\"name\\":\\"ECR_REPO_NAME\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"",
+                        Object {
+                          "Fn::ImportValue": "myCdk-test-StatefulStack:ExportsOutputRefEcrRepository4D7B3EE140E01346",
+                        },
+                        "\\"},{\\"name\\":\\"AWS_ACCOUNT_ID\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"dummy-account\\"},{\\"name\\":\\"AWS_DEFAULT_REGION\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"dummy-region\\"}]",
+                      ],
+                    ],
+                  },
+                  "ProjectName": Object {
+                    "Ref": "BuildProject097C5DB7",
+                  },
+                },
+                "InputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Source_CodeCommit",
+                  },
+                ],
+                "Name": "CodeBuild",
+                "OutputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Build_CodeBuild",
+                  },
+                ],
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineBuildCodeBuildCodePipelineActionRole3421E70C",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "Build",
+          },
+          Object {
+            "Actions": Array [
+              Object {
+                "ActionTypeId": Object {
+                  "Category": "Deploy",
+                  "Owner": "AWS",
+                  "Provider": "ECS",
+                  "Version": "1",
+                },
+                "Configuration": Object {
+                  "ClusterName": Object {
+                    "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputRefClusterEB0386A796A0E3FE",
+                  },
+                  "ServiceName": Object {
+                    "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputFnGetAttServiceD69D759BName51127533",
+                  },
+                },
+                "InputArtifacts": Array [
+                  Object {
+                    "Name": "Artifact_Build_CodeBuild",
+                  },
+                ],
+                "Name": "CodeDeploy",
+                "RoleArn": Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineDeployCodeDeployCodePipelineActionRole128AF5DF",
+                    "Arn",
+                  ],
+                },
+                "RunOrder": 1,
+              },
+            ],
+            "Name": "Deploy",
+          },
+        ],
+      },
+      "Type": "AWS::CodePipeline::Pipeline",
+    },
+    "myCdktestPipelineDeployCodeDeployCodePipelineActionRole128AF5DF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::dummy-account:root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "myCdktestPipelineDeployCodeDeployCodePipelineActionRoleDefaultPolicy74E500C5": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "ecs:DescribeServices",
+                "ecs:DescribeTaskDefinition",
+                "ecs:DescribeTasks",
+                "ecs:ListTasks",
+                "ecs:RegisterTaskDefinition",
+                "ecs:UpdateService",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Condition": Object {
+                "StringEqualsIfExists": Object {
+                  "iam:PassedToService": Array [
+                    "ec2.amazonaws.com",
+                    "ecs-tasks.amazonaws.com",
+                  ],
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketC0F7F396",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "myCdktestPipelineArtifactsBucketC0F7F396",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "myCdktestPipelineDeployCodeDeployCodePipelineActionRoleDefaultPolicy74E500C5",
+        "Roles": Array [
+          Object {
+            "Ref": "myCdktestPipelineDeployCodeDeployCodePipelineActionRole128AF5DF",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "myCdktestPipelineEventsRoleBB75AA4F": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "events.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "myCdktestPipelineEventsRoleDefaultPolicy785AC4CC": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "codepipeline:StartPipelineExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":codepipeline:dummy-region:dummy-account:",
+                    Object {
+                      "Ref": "myCdktestPipelineC9E9A08B",
+                    },
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "myCdktestPipelineEventsRoleDefaultPolicy785AC4CC",
+        "Roles": Array [
+          Object {
+            "Ref": "myCdktestPipelineEventsRoleBB75AA4F",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "myCdktestPipelineRoleDefaultPolicy79743052": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketC0F7F396",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "myCdktestPipelineArtifactsBucketC0F7F396",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleC6C23813",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineBuildCodeBuildCodePipelineActionRole3421E70C",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineDeployCodeDeployCodePipelineActionRole128AF5DF",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "myCdktestPipelineRoleDefaultPolicy79743052",
+        "Roles": Array [
+          Object {
+            "Ref": "myCdktestPipelineRoleF893E8BB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "myCdktestPipelineRoleF893E8BB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "codepipeline.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleC6C23813": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "AWS": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::dummy-account:root",
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleDefaultPolicyEA6A6B73": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "myCdktestPipelineArtifactsBucketC0F7F396",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "myCdktestPipelineArtifactsBucketC0F7F396",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "myCdktestPipelineArtifactsBucketEncryptionKeyCDB42DE5",
+                  "Arn",
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "codecommit:GetBranch",
+                "codecommit:GetCommit",
+                "codecommit:UploadArchive",
+                "codecommit:GetUploadArchiveStatus",
+                "codecommit:CancelUploadArchive",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::ImportValue": "myCdk-common-StatefulStack:ExportsOutputFnGetAttCodeCommitRepository596379BCArnE945FC92",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleDefaultPolicyEA6A6B73",
+        "Roles": Array [
+          Object {
+            "Ref": "myCdktestPipelineSourceCodeCommitCodePipelineActionRoleC6C23813",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "myCdktestPipelinemyCdktestCicdStackmyCdktestPipeline4BB04618EventRule0AC3E957": Object {
+      "Properties": Object {
+        "EventPattern": Object {
+          "detail": Object {
+            "event": Array [
+              "referenceCreated",
+              "referenceUpdated",
+            ],
+            "referenceName": Array [
+              "master",
+            ],
+          },
+          "detail-type": Array [
+            "CodeCommit Repository State Change",
+          ],
+          "resources": Array [
+            Object {
+              "Fn::ImportValue": "myCdk-common-StatefulStack:ExportsOutputFnGetAttCodeCommitRepository596379BCArnE945FC92",
+            },
+          ],
+          "source": Array [
+            "aws.codecommit",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "arn:",
+                  Object {
+                    "Ref": "AWS::Partition",
+                  },
+                  ":codepipeline:dummy-region:dummy-account:",
+                  Object {
+                    "Ref": "myCdktestPipelineC9E9A08B",
+                  },
+                ],
+              ],
+            },
+            "Id": "Target0",
+            "RoleArn": Object {
+              "Fn::GetAtt": Array [
+                "myCdktestPipelineEventsRoleBB75AA4F",
+                "Arn",
+              ],
+            },
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
