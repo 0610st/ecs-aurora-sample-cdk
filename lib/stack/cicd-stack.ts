@@ -21,7 +21,6 @@ export class CicdStack extends BaseStack {
   constructor(scope: Construct, id: string, deps: CicdStackDependencyProps, props: BaseStackProps) {
     super(scope, id, props);
 
-    // CodeBuild Project
     const buildProjectName = createResourceName(props.context.systemName, props.context.envType, 'build');
     const buildProject = new codebuild.PipelineProject(this, 'BuildProject', {
       logging: {
@@ -52,7 +51,6 @@ export class CicdStack extends BaseStack {
       }),
     );
 
-    // CodePipeline
     const sourceOutput = new codepipeline.Artifact();
     const buildOutput = new codepipeline.Artifact();
     new codepipeline.Pipeline(this, createResourceName(props.context.systemName, props.context.envType, 'Pipeline'), {

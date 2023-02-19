@@ -8,6 +8,8 @@ export interface SubnetsProps {
 }
 
 export interface CommonSecurityGroupsProps {
+  alb: ec2.SecurityGroup;
+  web: ec2.SecurityGroup;
   endpoint: ec2.SecurityGroup;
 }
 
@@ -55,11 +57,21 @@ export class CommonNetworkStack extends BaseStack {
   }
 
   private createSecurityGroups(scope: Construct, vpc: ec2.IVpc): CommonSecurityGroupsProps {
-    const endpoint = new ec2.SecurityGroup(scope, 'SecurityGroupEndpoint', {
+    const alb = new ec2.SecurityGroup(scope, 'SecurityGroupAlb', {
+      vpc: vpc,
+    });
+    alb.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80));
+
+    const web = new ec2.SecurityGroup(scope, 'SecurityGroupWeb', {
       vpc: vpc,
     });
 
-    return { endpoint };
+    const endpoint = new ec2.SecurityGroup(scope, 'SecurityGroupEndpoint', {
+      vpc: vpc,
+    });
+    endpoint.addIngressRule(ec2.Peer.securityGroupId(web.securityGroupId), ec2.Port.tcp(443));
+
+    return { alb, web, endpoint };
   }
 
   private createVpcEndpoints(

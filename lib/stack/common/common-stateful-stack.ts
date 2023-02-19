@@ -10,7 +10,6 @@ export class CommonStatefulStack extends BaseStack {
   constructor(scope: Construct, id: string, props: BaseStackProps) {
     super(scope, id, props, true);
 
-    // CodeCommit Repository
     this.codeRepository = this.createCodeCommitRepository(this, props);
   }
 

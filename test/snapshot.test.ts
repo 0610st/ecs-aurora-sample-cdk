@@ -45,7 +45,8 @@ test('snapthot test', () => {
     ecrRepository: statefulStack.ecrRepository,
     vpc: commonNetworkStack.vpc,
     targetSubnets: [commonNetworkStack.subnets.private1, commonNetworkStack.subnets.private2],
-    vpcEndpointSecurityGroup: commonNetworkStack.securityGroups.endpoint,
+    targetSecurityGroup: commonNetworkStack.securityGroups.web,
+    loadBalancerSecurityGroup: commonNetworkStack.securityGroups.alb,
   };
   const ecsStack = new EcsStack(app, 'EcsStack', ecsStackDeps, { context, env });
 

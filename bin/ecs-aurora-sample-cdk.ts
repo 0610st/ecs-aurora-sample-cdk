@@ -16,7 +16,11 @@ const env = context.env ?? {
   region: process.env.CDK_DEFAULT_REGION,
 };
 
-const commonStatefulStack = new CommonStatefulStack(app, 'StatefulStack', { context, env });
+const commonStatefulStack = new CommonStatefulStack(app, 'StatefulStack', {
+  context,
+  env,
+  terminationProtection: true,
+});
 
 const commonNetworkStack = new CommonNetworkStack(app, 'NetworkStack', { context, env });
 
@@ -24,13 +28,18 @@ const statefulStackDeps = {
   databaseVpc: commonNetworkStack.vpc,
   databaseSubnets: [commonNetworkStack.subnets.private1, commonNetworkStack.subnets.private2],
 };
-const statefulStack = new StatefulStack(app, 'StatefulStack', statefulStackDeps, { context, env });
+const statefulStack = new StatefulStack(app, 'StatefulStack', statefulStackDeps, {
+  context,
+  env,
+  terminationProtection: true,
+});
 
 const ecsStackDeps = {
   ecrRepository: statefulStack.ecrRepository,
   vpc: commonNetworkStack.vpc,
   targetSubnets: [commonNetworkStack.subnets.private1, commonNetworkStack.subnets.private2],
-  vpcEndpointSecurityGroup: commonNetworkStack.securityGroups.endpoint,
+  targetSecurityGroup: commonNetworkStack.securityGroups.web,
+  loadBalancerSecurityGroup: commonNetworkStack.securityGroups.alb,
 };
 const ecsStack = new EcsStack(app, 'EcsStack', ecsStackDeps, { context, env });
 

@@ -23,13 +23,10 @@ export class StatefulStack extends BaseStack {
   constructor(scope: Construct, id: string, deps: StatefulStackDependencyProps, props: BaseStackProps) {
     super(scope, id, props);
 
-    // ECR Repository
     this.ecrRepository = this.createEcrRepository(this, props);
 
-    // Aurora
     this.dbCluster = this.createAurora(this, deps.databaseVpc, deps.databaseSubnets);
 
-    // Lambda for Stop Aurora
     this.createStopDbFunction(this, this.dbCluster.clusterIdentifier);
   }
 

@@ -10,7 +10,8 @@ export interface EcsStackDependencyProps {
   ecrRepository: ecr.Repository;
   vpc: ec2.IVpc;
   targetSubnets: ec2.ISubnet[];
-  vpcEndpointSecurityGroup: ec2.SecurityGroup;
+  targetSecurityGroup: ec2.SecurityGroup;
+  loadBalancerSecurityGroup: ec2.SecurityGroup;
 }
 
 export class EcsStack extends BaseStack {
@@ -19,39 +20,17 @@ export class EcsStack extends BaseStack {
   constructor(scope: Construct, id: string, deps: EcsStackDependencyProps, props: BaseStackProps) {
     super(scope, id, props);
 
-    // Security Group
-    const securityGroups = this.createSecurityGroups(this, deps.vpc);
-    deps.vpcEndpointSecurityGroup.addIngressRule(
-      ec2.Peer.securityGroupId(securityGroups.web.securityGroupId),
-      ec2.Port.tcp(443),
-    );
+    const alb = this.createLoadBalancer(this, deps.vpc, deps.loadBalancerSecurityGroup, props);
 
-    // ALB
-    const alb = this.createLoadBalancer(this, deps.vpc, securityGroups.alb, props);
-
-    // ECS
     this.fargateService = this.createAutoScalingFargateService(
       this,
       deps.ecrRepository,
       alb,
       deps.vpc,
       deps.targetSubnets,
-      securityGroups.web,
+      deps.targetSecurityGroup,
       props,
     );
-  }
-
-  private createSecurityGroups(scope: Construct, vpc: ec2.IVpc) {
-    const alb = new ec2.SecurityGroup(scope, 'SecurityGroupAlb', {
-      vpc: vpc,
-    });
-    alb.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80));
-
-    const web = new ec2.SecurityGroup(scope, 'SecurityGroupWeb', {
-      vpc: vpc,
-    });
-
-    return { alb, web };
   }
 
   private createLoadBalancer(
