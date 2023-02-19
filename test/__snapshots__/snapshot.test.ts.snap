@@ -75,6 +75,30 @@ Object {
 
 exports[`snapthot test 2`] = `
 Object {
+  "Outputs": Object {
+    "ExportsOutputFnGetAttSecurityGroupAlbD38A08FFGroupIdA0D237FE": Object {
+      "Export": Object {
+        "Name": "myCdk-common-NetworkStack:ExportsOutputFnGetAttSecurityGroupAlbD38A08FFGroupIdA0D237FE",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "SecurityGroupAlbD38A08FF",
+          "GroupId",
+        ],
+      },
+    },
+    "ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15": Object {
+      "Export": Object {
+        "Name": "myCdk-common-NetworkStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+      },
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "SecurityGroupWeb1BF47CDB",
+          "GroupId",
+        ],
+      },
+    },
+  },
   "Parameters": Object {
     "BootstrapVersion": Object {
       "Default": "/cdk-bootstrap/hnb659fds/version",
@@ -147,6 +171,29 @@ Object {
       },
       "Type": "AWS::EC2::VPCEndpoint",
     },
+    "SecurityGroupAlbD38A08FF": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-common-NetworkStack/SecurityGroupAlb",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "from 0.0.0.0/0:80",
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "ToPort": 80,
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
     "SecurityGroupEndpoint352EE1A2": Object {
       "Properties": Object {
         "GroupDescription": "myCdk-common-NetworkStack/SecurityGroupEndpoint",
@@ -159,20 +206,16 @@ Object {
         ],
         "SecurityGroupIngress": Array [
           Object {
-            "CidrIp": "1.2.3.4/5",
-            "Description": "from 1.2.3.4/5:443",
-            "FromPort": 443,
-            "IpProtocol": "tcp",
-            "ToPort": 443,
-          },
-          Object {
             "Description": Object {
               "Fn::Join": Array [
                 "",
                 Array [
                   "from ",
                   Object {
-                    "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+                    "Fn::GetAtt": Array [
+                      "SecurityGroupWeb1BF47CDB",
+                      "GroupId",
+                    ],
                   },
                   ":443",
                 ],
@@ -181,14 +224,59 @@ Object {
             "FromPort": 443,
             "IpProtocol": "tcp",
             "SourceSecurityGroupId": Object {
-              "Fn::ImportValue": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
+              "Fn::GetAtt": Array [
+                "SecurityGroupWeb1BF47CDB",
+                "GroupId",
+              ],
             },
+            "ToPort": 443,
+          },
+          Object {
+            "CidrIp": "1.2.3.4/5",
+            "Description": "from 1.2.3.4/5:443",
+            "FromPort": 443,
+            "IpProtocol": "tcp",
             "ToPort": 443,
           },
         ],
         "VpcId": "vpc-12345",
       },
       "Type": "AWS::EC2::SecurityGroup",
+    },
+    "SecurityGroupWeb1BF47CDB": Object {
+      "Properties": Object {
+        "GroupDescription": "myCdk-common-NetworkStack/SecurityGroupWeb",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": "vpc-12345",
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "SecurityGroupWebfrommyCdkcommonNetworkStackSecurityGroupAlb8EACA34A3000D9C2B43E": Object {
+      "Properties": Object {
+        "Description": "Load balancer to target",
+        "FromPort": 3000,
+        "GroupId": Object {
+          "Fn::GetAtt": Array [
+            "SecurityGroupWeb1BF47CDB",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": Object {
+          "Fn::GetAtt": Array [
+            "SecurityGroupAlbD38A08FF",
+            "GroupId",
+          ],
+        },
+        "ToPort": 3000,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
     },
   },
   "Rules": Object {
@@ -667,17 +755,6 @@ Object {
 exports[`snapthot test 4`] = `
 Object {
   "Outputs": Object {
-    "ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15": Object {
-      "Export": Object {
-        "Name": "myCdk-test-EcsStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
-      },
-      "Value": Object {
-        "Fn::GetAtt": Array [
-          "SecurityGroupWeb1BF47CDB",
-          "GroupId",
-        ],
-      },
-    },
     "ExportsOutputFnGetAttServiceD69D759BName51127533": Object {
       "Export": Object {
         "Name": "myCdk-test-EcsStack:ExportsOutputFnGetAttServiceD69D759BName51127533",
@@ -718,10 +795,7 @@ Object {
         "Scheme": "internet-facing",
         "SecurityGroups": Array [
           Object {
-            "Fn::GetAtt": Array [
-              "SecurityGroupAlbD38A08FF",
-              "GroupId",
-            ],
+            "Fn::ImportValue": "myCdk-common-NetworkStack:ExportsOutputFnGetAttSecurityGroupAlbD38A08FFGroupIdA0D237FE",
           },
         ],
         "Subnets": Array [
@@ -771,64 +845,6 @@ Object {
       },
       "Type": "AWS::ECS::Cluster",
     },
-    "SecurityGroupAlbD38A08FF": Object {
-      "Properties": Object {
-        "GroupDescription": "myCdk-test-EcsStack/SecurityGroupAlb",
-        "SecurityGroupEgress": Array [
-          Object {
-            "CidrIp": "0.0.0.0/0",
-            "Description": "Allow all outbound traffic by default",
-            "IpProtocol": "-1",
-          },
-        ],
-        "SecurityGroupIngress": Array [
-          Object {
-            "CidrIp": "0.0.0.0/0",
-            "Description": "from 0.0.0.0/0:80",
-            "FromPort": 80,
-            "IpProtocol": "tcp",
-            "ToPort": 80,
-          },
-        ],
-        "VpcId": "vpc-12345",
-      },
-      "Type": "AWS::EC2::SecurityGroup",
-    },
-    "SecurityGroupWeb1BF47CDB": Object {
-      "Properties": Object {
-        "GroupDescription": "myCdk-test-EcsStack/SecurityGroupWeb",
-        "SecurityGroupEgress": Array [
-          Object {
-            "CidrIp": "0.0.0.0/0",
-            "Description": "Allow all outbound traffic by default",
-            "IpProtocol": "-1",
-          },
-        ],
-        "VpcId": "vpc-12345",
-      },
-      "Type": "AWS::EC2::SecurityGroup",
-    },
-    "SecurityGroupWebfrommyCdktestEcsStackSecurityGroupAlb77931EAA300004DCAE62": Object {
-      "Properties": Object {
-        "Description": "Load balancer to target",
-        "FromPort": 3000,
-        "GroupId": Object {
-          "Fn::GetAtt": Array [
-            "SecurityGroupWeb1BF47CDB",
-            "GroupId",
-          ],
-        },
-        "IpProtocol": "tcp",
-        "SourceSecurityGroupId": Object {
-          "Fn::GetAtt": Array [
-            "SecurityGroupAlbD38A08FF",
-            "GroupId",
-          ],
-        },
-        "ToPort": 3000,
-      },
-      "Type": "AWS::EC2::SecurityGroupIngress",
-    },
     "ServiceD69D759B": Object {
       "DependsOn": Array [
         "AlbListenerECSGroup39470D71",
@@ -859,10 +875,7 @@ Object {
             "AssignPublicIp": "DISABLED",
             "SecurityGroups": Array [
               Object {
-                "Fn::GetAtt": Array [
-                  "SecurityGroupWeb1BF47CDB",
-                  "GroupId",
-                ],
+                "Fn::ImportValue": "myCdk-common-NetworkStack:ExportsOutputFnGetAttSecurityGroupWeb1BF47CDBGroupId7F72FF15",
               },
             ],
             "Subnets": Array [
