@@ -17,3 +17,13 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 ## References
 
 https://github.com/aws-samples/baseline-environment-on-aws/tree/main/usecases/guest-apiapp-sample
+
+
+## Diagrams
+
+[cdk-dia](https://github.com/pistazie/cdk-dia)
+
+```
+% cdk synth
+% npx cdk-dia
+```
